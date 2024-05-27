@@ -58,17 +58,17 @@ def get_args(parser):
     )
 
     parser.add_argument(
-        "--C",
+        "--G1",
         default=0.1,
         type=float,
-        help="coefficient C value (default: 0.1)",
+        help="Game-specific parameter 1 (default: 0.1)",
     )
 
     parser.add_argument(
-        "--p",
+        "--G2",
         default=0.5,
         type=float,
-        help="probability p (default: 0.5)",
+        help="Game-specific parameter 2 (default: 0.5)",
     )
 
     parser.add_argument(
@@ -342,28 +342,29 @@ def plots(
     # Melt the DataFrame to long format for seaborn plotting
     melted_df = df_filtered.melt(var_name="Coefficient", value_name="Value")
 
-    # Plot using seaborn's bar plot with error bars
-    sns.barplot(
-        x="Coefficient",
-        y="Value",
-        data=melted_df,
-        errorbar="sd",
-        palette=["red", "blue", "green", "orange"],
-    )
-    plt.errorbar(
-        x=np.arange(len(means)),
-        y=means,
-        yerr=np.sqrt(variances),
-        fmt="none",
-        c="black",
-        capsize=5,
-        capthick=2,
-    )
-    plt.xlabel("Coefficient")
-    plt.ylabel("Value")
-    plt.ylim(0, 1)
-    plt.savefig(os.path.join(output_directory, "actions1_vs_coeffs.png"))
-    plt.close()
+    if not melted_df.empty:
+        # Plot using seaborn's bar plot with error bars
+        sns.barplot(
+            x="Coefficient",
+            y="Value",
+            data=melted_df,
+            errorbar="sd",
+            palette=["red", "blue", "green", "orange"],
+        )
+        plt.errorbar(
+            x=np.arange(len(means)),
+            y=means,
+            yerr=np.sqrt(variances),
+            fmt="none",
+            c="black",
+            capsize=5,
+            capthick=2,
+        )
+        plt.xlabel("Coefficient")
+        plt.ylabel("Value")
+        plt.ylim(0, 1)
+        plt.savefig(os.path.join(output_directory, "actions1_vs_coeffs.png"))
+        plt.close()
 
     # Plot coefficients when all_indiv_actions_last is in [0, 1)
     filter_condition0 = lambda x: 0 <= all_indiv_actions_last[x] < 1
@@ -381,28 +382,29 @@ def plots(
     # Melt the DataFrame to long format for seaborn plotting
     melted_df = df_filtered.melt(var_name="Coefficient", value_name="Value")
 
-    # Plot using seaborn's bar plot with error bars
-    sns.barplot(
-        x="Coefficient",
-        y="Value",
-        data=melted_df,
-        errorbar="sd",
-        palette=["red", "blue", "green", "orange"],
-    )
-    plt.errorbar(
-        x=np.arange(len(means)),
-        y=means,
-        yerr=np.sqrt(variances),
-        fmt="none",
-        c="black",
-        capsize=5,
-        capthick=2,
-    )
-    plt.xlabel("Coefficient")
-    plt.ylabel("Value")
-    plt.ylim(0, 1)
-    plt.savefig(os.path.join(output_directory, "actions0_vs_coeffs.png"))
-    plt.close()
+    if not melted_df.empty:
+        # Plot using seaborn's bar plot with error bars
+        sns.barplot(
+            x="Coefficient",
+            y="Value",
+            data=melted_df,
+            errorbar="sd",
+            palette=["red", "blue", "green", "orange"],
+        )
+        plt.errorbar(
+            x=np.arange(len(means)),
+            y=means,
+            yerr=np.sqrt(variances),
+            fmt="none",
+            c="black",
+            capsize=5,
+            capthick=2,
+        )
+        plt.xlabel("Coefficient")
+        plt.ylabel("Value")
+        plt.ylim(0, 1)
+        plt.savefig(os.path.join(output_directory, "actions0_vs_coeffs.png"))
+        plt.close()
 
     # Plot actions vs. pnb
     plt.figure(figsize=(8, 6))  # Set the figure size

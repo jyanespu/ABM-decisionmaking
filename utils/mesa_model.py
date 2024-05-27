@@ -12,7 +12,7 @@ class AgentCoor(mesa.Agent):
         :param model: The current team being runned
         :param pnb: The personal normative belief of the agent ( normal uniform etc. )
         :param B: The initializations of the coefficients of the utility function ( normal constant etc. )
-        :param C: The game-specific parameter
+        :param C: The game-specific parameter (not relevant, always set to 0.1)
         :param update_amount: The learning update amount for RL
         """
         super().__init__(unique_id, model)
@@ -204,8 +204,11 @@ class AgentCPD(mesa.Agent):
 
     def step(self):
         self.update_empirical()
+
+        # Game-specific step
         pair_agent = random.choice(self.teammates)
         self.pair_action = pair_agent.action
+
         self.update_coeffs()
         self.update_action()
 
@@ -310,9 +313,12 @@ class AgentPG(mesa.Agent):
 
     def step(self):
         self.update_empirical()
+
+        # Game-specific step
         team = random.sample(self.teammates, 3)
         team_actions = [agent.action for agent in team]
         self.team_action = sum(team_actions) + self.action
+
         self.update_coeffs()
         self.update_action()
 
@@ -431,27 +437,41 @@ class AgentCR(mesa.Agent):
 
     def step(self):
         self.update_empirical()
+
+        # Game-specific step
         team = random.sample(self.teammates, 3)
         team_actions = [agent.action for agent in team]
         self.team_action = sum(team_actions) + self.action
+
         self.update_coeffs()
         self.update_action()
 
 
 class Model(mesa.Model):
-    def __init__(self, unique_id, game, N, pnb, B, C, p, update_amount=0.01, seed=None):
+    def __init__(
+        self,
+        unique_id,
+        game,
+        N,
+        pnb,
+        B,
+        G1=None,
+        G2=None,
+        update_amount=0.01,
+        seed=None,
+    ):
         """
-         Initialize the team
-         
-         :param unique_id: A unique ID for the team
-         :param game: The type of game to use ( Coor, CPD, PG, CR )
-         :param N: The number of agents to initialize ( int )
-         :param pnb: The personal normative belief of the agent ( normal uniform etc. )
-         :param B: Game-specific parameter
-         :param C: Game-specific parameter
-         :param p: Game-specific parameter
-         :param update_amount: The learning update amount for RL
-         :param seed: Seed for reproducibility
+        Initialize the team
+
+        :param unique_id: A unique ID for the team
+        :param game: The type of game to use ( Coor, CPD, PG, CR )
+        :param N: The number of agents to initialize ( int )
+        :param pnb: The personal normative belief of the agent ( normal uniform etc. )
+        :param B: The initializations of the coefficients of the utility function ( normal constant etc. )
+        :param G1: Game-specific parameter 1
+        :param G2: Game-specific parameter 2
+        :param update_amount: The learning update amount for RL
+        :param seed: Seed for reproducibility
         """
         super().__init__(unique_id)
 
@@ -466,13 +486,13 @@ class Model(mesa.Model):
         # Initialize agents
         for i in range(self.num_agents):
             if game == "Coor":
-                a = AgentCoor(i, self, pnb, B, C, update_amount)
+                a = AgentCoor(i, self, pnb, B, G1, update_amount)
             elif game == "CPD":
-                a = AgentCPD(i, self, pnb, B, C)
+                a = AgentCPD(i, self, pnb, B, G1)
             elif game == "PG":
-                a = AgentPG(i, self, pnb, B, C)
+                a = AgentPG(i, self, pnb, B, G1)
             elif game == "CR":
-                a = AgentCR(i, self, pnb, B, C, p)
+                a = AgentCR(i, self, pnb, B, G1, G2)
             # Add the agent to the scheduler
             self.schedule.add(a)
 
