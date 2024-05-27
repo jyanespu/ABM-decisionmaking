@@ -58,9 +58,9 @@ if __name__ == "__main__":
 
     # Create a directory to save the pictures
     if args.game == "CR":
-        output_directory = f"/lustre/home/io/jyanes/MESA/{args.game}_{args.groups}_{args.group_size}_{args.rounds}_{args.pnb}_{args.B}_{args.G1}_{args.G2}"
+        output_directory = f"{args.directory}/{args.game}_{args.groups}_{args.group_size}_{args.rounds}_{args.pnb}_{args.B}_{args.G1}_{args.G2}"
     else:
-        output_directory = f"/lustre/home/io/jyanes/MESA/{args.game}_{args.groups}_{args.group_size}_{args.rounds}_{args.pnb}_{args.B}_{args.G1}_{args.update_amount}"
+        output_directory = f"{args.directory}/{args.game}_{args.groups}_{args.group_size}_{args.rounds}_{args.pnb}_{args.B}_{args.G1}_{args.update_amount}"
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
