@@ -61,14 +61,14 @@ def get_args(parser):
         "--G1",
         default=0.1,
         type=float,
-        help="Game-specific parameter 1 (default: 0.1)",
+        help="game-specific parameter 1 (default: 0.1)",
     )
 
     parser.add_argument(
         "--G2",
         default=0.5,
         type=float,
-        help="Game-specific parameter 2 (default: 0.5)",
+        help="game-specific parameter 2 (only applicable for CR, corresponding to loss probability) (default: 0.5)",
     )
 
     parser.add_argument(
@@ -76,6 +76,12 @@ def get_args(parser):
         default=0.01,
         type=float,
         help="RL update amount (default: 0.01)",
+    )
+
+    parser.add_argument(
+        "--directory",
+        type=str,
+        help="directory where images will be stored",
     )
 
     return parser.parse_args()
