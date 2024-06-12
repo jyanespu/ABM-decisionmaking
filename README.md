@@ -1,6 +1,5 @@
 # Evolutionary study of decision making in the presence of social and personal norms
-This repository provides the implementation for the bachelor's thesis titled "Evolutionary study of decision making in the presence of social and personal norms", completed at Universidad Carlos III de Madrid (UC3M) during the 2023-2024 academic year.
-The code provided here performs the agent-based simulations used to derive the findings of the thesis.
+This repository contains the code for the agent-based simulations that supported the findings of the bachelor's thesis titled "Evolutionary study of decision making in the presence of social and personal norms", completed at Universidad Carlos III de Madrid (UC3M) during the 2023-2024 academic year.
 
 ## Dependencies
 This implementation requires [MESA](https://mesa.readthedocs.io/en/stable/).
