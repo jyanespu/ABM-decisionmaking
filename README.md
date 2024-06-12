@@ -1,8 +1,5 @@
 # Evolutionary study of decision making in the presence of social and personal norms
 This repository provides the implementation for the bachelor's thesis titled "Evolutionary study of decision making in the presence of social and personal norms", completed at Universidad Carlos III de Madrid (UC3M) during the 2023-2024 academic year.
-
-*Abstract:* {TBM}
-
 The code provided here performs the agent-based simulations used to derive the findings of the thesis.
 
 ## Dependencies
